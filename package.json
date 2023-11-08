@@ -1,0 +1,22 @@
+{
+   "name": "nursecare-server",
+   "version": "1.0.0",
+   "description": "NurseCare Server ",
+   "type": "commonjs",
+   "main": "index.js",
+   "scripts": {
+      "start": "npm run build && node dist/index.js",
+      "build": "tsc"
+   },
+   "author": "Aurélien VERNAY",
+   "license": "ISC",
+   "devDependencies": {
+      "@types/google.maps": "^3.54.4",
+      "@types/node": "20.8.7",
+      "@typescript-eslint/eslint-plugin": "6.8.0",
+      "@typescript-eslint/parser": "6.8.0",
+      "dotenv": "16.3.1",
+      "eslint": "8.51.0",
+      "typescript": "5.2.2"
+   }
+}

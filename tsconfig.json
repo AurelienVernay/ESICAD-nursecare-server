@@ -1,0 +1,29 @@
+{
+   "compilerOptions": {
+      /* Visit https://aka.ms/tsconfig to read more about this file */
+      "target": "ES6",
+      "module": "CommonJS",
+      "rootDir": "./src",
+      "typeRoots": ["node_modules/@types"],
+      "outDir": "./dist" /* Specify an output folder for all emitted files. */,
+
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "noImplicitAny": true,
+      "strictNullChecks": true,
+      "strictFunctionTypes": true,
+      "strictBindCallApply": true,
+      "strictPropertyInitialization": true,
+      "noImplicitThis": true,
+      "alwaysStrict": true,
+      "noUnusedLocals": false,
+      "noUnusedParameters": false,
+      "noImplicitReturns": true,
+      "allowUnreachableCode": false,
+      "skipLibCheck": true
+   },
+   "typeAcquisition": {
+      "enable": true
+   }
+}
