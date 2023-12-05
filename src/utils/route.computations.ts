@@ -18,6 +18,8 @@ const delay = (time: number) =>
  */
 const computeRoutes = async (adresses: string[], startingPoint: string) => {
    let result;
+   const now = new Date();
+   now.setHours(now.getHours() + 1);
    if (APIKey.length) {
       const requestBody = {
          origin: {
@@ -30,7 +32,7 @@ const computeRoutes = async (adresses: string[], startingPoint: string) => {
          regionCode: "fr",
          travelMode: "DRIVE",
          routingPreference: "TRAFFIC_AWARE",
-         departureTime: new Date().toISOString(),
+         departureTime: now.toISOString(),
          computeAlternativeRoutes: false,
          routeModifiers: {
             avoidTolls: true,
@@ -54,19 +56,31 @@ const computeRoutes = async (adresses: string[], startingPoint: string) => {
       });
 
       const gMapsResult =
-         (await response.json()) as google.maps.DirectionsResult;
-      const { routes } = gMapsResult;
-      result = {
-         // ugly casts to get the properties that i need (dunno why the types are out of date, might be doing smth wrong)
-         orderedAddresses: (
-            routes[0] as unknown as {
-               optimizedIntermediateWaypointIndex: number[];
-            }
-         ).optimizedIntermediateWaypointIndex.map((i: number) => adresses[i]),
-         encodedPolyline: (
-            routes[0] as unknown as { polyline: { encodedPolyline: string } }
-         ).polyline.encodedPolyline,
-      };
+         (await response.json()) as google.maps.DirectionsResult & {
+            error: unknown;
+         };
+      if (gMapsResult.error) {
+         console.log(
+            "Error while retrieving result",
+            JSON.stringify(gMapsResult.error),
+         );
+         result = null;
+      } else {
+         const { routes } = gMapsResult;
+         result = {
+            // ugly casts to get the properties that i need (dunno why the types are out of date, might be doing smth wrong)
+            orderedAddresses: (
+               routes[0] as unknown as {
+                  optimizedIntermediateWaypointIndex: number[];
+               }
+            ).optimizedIntermediateWaypointIndex.map(
+               (i: number) => adresses[i],
+            ),
+            encodedPolyline: (
+               routes[0] as unknown as { polyline: { encodedPolyline: string } }
+            ).polyline.encodedPolyline,
+         };
+      }
    } else {
       console.log(
          "No Google Map API Key found in GOOGLE_MAP_API_KEY environement variable, using mock random mode",
