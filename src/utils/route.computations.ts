@@ -18,8 +18,9 @@ const delay = (time: number) =>
  */
 const computeRoutes = async (adresses: string[], startingPoint: string) => {
    let result;
-   const now = new Date();
-   now.setHours(now.getHours() + 1);
+   const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+   const now = new Date(Date.now() - tzoffset);
+
    if (APIKey.length) {
       const requestBody = {
          origin: {
