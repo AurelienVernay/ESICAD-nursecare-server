@@ -1,7 +1,4 @@
-import {
-   computeRoutes,
-   generatePermutations,
-} from "./utils/route.computations";
+import { computeRoutes } from "./utils/route.computations";
 
 const startingPoint = "1 Pl. du Président Thomas Wilson, 31000 Toulouse";
 const adresses = [
